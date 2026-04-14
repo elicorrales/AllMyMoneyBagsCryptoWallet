@@ -1,0 +1,7 @@
+/*css/wallet-modals.css */
+
+.modal-actions button:active,
+.yesorno-modal-actions button:active {
+  transform: translateY(1px);
+  filter: brightness(0.9);
+}

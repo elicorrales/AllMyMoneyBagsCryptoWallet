@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--dapp.html-->
+<html>
+<head>
+    <link rel="stylesheet" href="dapp.css">
+    <link rel="stylesheet" href="dapp-list.css">
+</head>
+<body>
+    <img class="money-bag" src="money-bag-2.svg" alt="Money Bag" />
+
+    <h1>Use This Page to Access DeFi Sites</h1>
+    <p>You can access a DeFi site by:</p>
+
+    <div class="defi-access-box">
+        <div class="defi-row">
+          <div class="defi-icon-box">
+            <img src="www.svg" alt="Web">
+          </div>
+          <div class="defi-text">
+            Entering the URL in the browser window's URL address box above.
+          </div>
+        </div>
+
+        <div class="defi-row">
+          <div class="defi-icon-box">
+            <img src="www.svg" alt="Web">
+          </div>
+          <div class="defi-text">
+            Select a site from the "DeFi Sites List" below.<br/>
+            Sites are added to the list below when you visit them.
+          </div>
+        </div>
+    </div>
+
+    <div class="defi-list-box">
+        <h2>DeFi Sites List</h2>
+        <ul>
+            <li class="defi-site-placeholder">No sites visited yet</li>
+        </ul>
+    </div>
+
+    <p>You may close it using the browser "X"</p>
+    <p>or click the "Close" button below.</p>
+
+    <button id="closeButton">Close</button>
+
+    <script src="site-persistence.js"></script>
+    <script src="dapp.js"></script>
+</body>
+</html>

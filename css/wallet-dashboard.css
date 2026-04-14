@@ -1,0 +1,100 @@
+/* dashboard.css */
+
+
+/* -- Network Menu Styles (still used by hamburger) -- */
+#networkMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0.5em 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+#networkMenu li {
+  padding: 0.5em 1em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#networkMenu li:hover {
+  background: #f5f5f5;
+}
+
+/* Position hamburger button fixed near top-right, left of the reset "X" */
+#hamburgerMenuWrapper {
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 72px; /* Adjust spacing from reset button */
+  z-index: 1000;
+}
+
+/* Style the hamburger button */
+#hamburgerMenuBtn {
+  font-size: 1.25em;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.box {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.8em;
+  background-color: #fafafa;
+}
+
+#walletStatus {
+  color: red;
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  /* Preserve newlines AND wrap long lines */
+  white-space: pre-wrap;
+  /* Break super-long words/URLs so they don’t overflow */
+  overflow-wrap: anywhere;
+}
+
+
+.panel { display: none; }
+
+
+
+#mainPasswordError {
+  color: red;
+  margin-top: 0.5em;
+}
+
+.box { margin: 1em; }
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+}
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.receiveAddressContainer {
+  display: none; /* show via JS when needed */
+  text-align: center;
+  word-break: break-all;
+  background: #f0f0f0;
+  padding: 1em;
+  border-radius: 8px;
+  user-select: all;
+}
+
+
+
+
+

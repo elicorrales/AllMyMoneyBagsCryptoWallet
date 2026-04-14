@@ -1,0 +1,45 @@
+/* css/wallet-choice-panel.css */
+
+#walletAction {
+  color: white;
+}
+
+#verifySeed {
+  color: white;
+}
+
+#downloadInstruct {
+  color: white;
+}
+
+#walletAction {
+  color: white;
+}
+
+#verifySeed {
+  color: white;
+}
+
+#downloadInstruct {
+  color: white;
+}
+
+/* Wallet name input styling */
+#walletNameInput {
+  margin: 0.5em 0;
+  width: 100%;
+  border: 2px solid red;
+  padding: 0.4em 0.6em;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+/* Wallet name validation message styling */
+#walletNameMessage {
+  color: red;
+  font-weight: bold;
+  min-height: 1.2em;
+  margin-bottom: 1em;
+}
+

@@ -1,0 +1,138 @@
+/* crypto-list.css */
+
+/* List panel refresh buttons */
+.cryptoListRefreshBtn {
+  display: inline-block;      /* aligns nicely with title text */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 0.5em;         /* small spacing from title */
+  line-height: 1;
+  color: #333;
+  transition: color 0.2s ease;
+  height: auto;
+  width: auto;
+  vertical-align: middle;     /* keep aligned with text */
+}
+
+.crypto-list-header .cryptoListRefreshBtn:hover {
+  color: #007bff;
+}
+
+
+/* Container for each asset row */
+.crypto-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Hover state to slightly change background */
+.crypto-row:hover {
+  background-color: #eee;
+}
+
+/* Asset name (left side) */
+.crypto-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Asset balance (right side) */
+.crypto-balance {
+  font-family: monospace;
+  font-size: 16px;
+}
+
+/* Shared panel class for both native and token panels */
+.digitalAssetPanel {
+  border-radius: 6px;
+  background-color: white;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+/* Keep collapsed panels hiding only the body */
+.panel.collapsed .panel-body {
+  display: none;
+}
+
+.digitalAssetPanel.collapsed .crypto-list-header button {
+  visibility: hidden; /* hide the refresh button when panel is collapsed */
+}
+
+.digitalAssetPanel .crypto-list-header button {
+  visibility: visible; /* show normally */
+}
+
+/* Shared panel body class */
+.digitalPanelBody {
+  padding: 1em;
+}
+
+/* Toggle icon */
+.toggle-icon {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Crypto row inside panel */
+.crypto-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* spacing between icon and text */
+  padding: 0.3em 0.5em;
+  cursor: pointer;
+}
+
+.crypto-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.crypto-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 0.5rem; /* spacing from icon */
+}
+
+/* Header bar for panels */
+.crypto-list-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75em 1em;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  background-color: #f7f7f7;
+  font-weight: 600;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.assetHelpIcon {
+  cursor: pointer;
+  display: inline-flex;             /* makes it behave like a box so we can size/pad it */
+  justify-content: center;
+  align-items: center;
+  width: 32px;                      /* circle width */
+  height: 32px;                     /* circle height */
+  font-size: 20px;                  /* bigger "?" */
+  margin-left: 8px;
+  margin-bottom: 1em;
+  background-color: #f0f0f0;        /* circle background */
+  border-radius: 50%;               /* makes it circular */
+  border: 1px solid #ccc;           /* optional border */
+  line-height: 1;
+}
+

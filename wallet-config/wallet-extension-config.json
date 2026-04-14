@@ -1,0 +1,13 @@
+{
+    "production": {
+      "MAX_DAPP_TABS": 1,
+      "CLOSE_ALL_TABS_IF_WALLET_TAB_MISSING": true,
+      "ALLOW_CHROME_EXTENSION_MANAGER" : "chrome://extensions"
+    },
+    "development": {
+      "MAX_DAPP_TABS": 7,
+      "CLOSE_ALL_TABS_IF_WALLET_TAB_MISSING": false,
+      "ALLOW_CHROME_EXTENSION_MANAGER" : "chrome://extensions"
+    }
+}
+

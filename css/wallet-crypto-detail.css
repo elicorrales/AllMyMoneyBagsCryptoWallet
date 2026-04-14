@@ -1,0 +1,118 @@
+/* crypto-detail.css */
+
+
+.receiveAddressContainer {
+  display: inline-flex;      /* inline-flex to keep line height consistent */
+  align-items: center;       /* vertically center all items */
+  gap: 0.5em;                /* spacing between items */
+  background-color: #f0f0f0;
+  padding: 0.6em 0.8em;
+  border-radius: 4px;
+  font-family: monospace;
+  color: black !important;
+  user-select: text;
+  max-width: 70vw;
+  overflow-wrap: break-word;
+}
+
+/* Address on its own line */
+.receiveAddressContainer code {
+  display: block;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copyButtonsContainer {
+  display: flex;
+  justify-content: center;  /* center buttons horizontally */
+  gap: 0.5em;
+  width: 100%;              /* make container span full width */
+}
+
+/* Style copy buttons */
+.receiveAddressContainer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: black !important;
+  padding: 0;
+  user-select: none;
+}
+
+.copyBtn {
+  white-space: nowrap;
+  min-width: 3.2em;
+  text-align: left;
+  padding-left: 0.2em;
+}
+
+/* ---- FIXED Refresh Button ---- */
+.cryptoDetailRefreshBtn {
+  display: inline-block;     /* ensures proper hover behavior */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  margin-top: 14px;
+  margin-left: 12px;        /* spacing from text/icons */
+  line-height: 1;
+  color: #333;              /* override parent color */
+  transition: color 0.2s ease;
+  height: auto;
+  width: auto;
+  vertical-align: middle;   /* align with icons/text */
+}
+
+.cryptoDetailTitle {
+  color: white;
+  caret-color: transparent !important;
+  outline: none !important;
+  display: flex;                  /* allow children like refresh button to align */
+  align-items: center;            /* vertical alignment */
+  gap: 0.5em;                     /* spacing between title text and button/icons */
+}
+
+.cryptoDetailTitle .cryptoDetailRefreshBtn:hover {
+  color: #007bff;           /* enough specificity for all panels */
+}
+
+/* Generic hover for title area if needed */
+.cryptoDetailTitle:hover {
+  color: #fff; /* keep text white; only refresh button changes */
+}
+
+.cryptoDetailTitleFlex {
+  display: flex;
+  align-items: center;   /* vertical alignment */
+  gap: 0.5em;
+}
+
+.cryptoDetailTitleText {
+  white-space: nowrap;   /* prevent wrapping unless necessary */
+}
+
+.crypto-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  padding: 2px;                  /* gives breathing room */
+  background-color: #fff;        /* white background */
+  border-radius: 6px;            /* rounded corners */
+  box-sizing: border-box;        /* keeps size consistent */
+}
+
+.crypto-icon + .crypto-icon {
+  margin-left: -0.2em;  /* tuck them closer together */
+}
+
+/* Optional: Hover effect for icons themselves */
+.cryptoDetailTitle .crypto-icon:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+

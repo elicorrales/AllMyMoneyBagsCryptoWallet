@@ -1,0 +1,88 @@
+/* css/asset-prov-row.css */
+
+.asset-prov-row {
+  background-color: #fff; /* normal row */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  font-size: 0.9em;
+}
+
+.asset-prov-row.unused {
+  background-color: #ffe6e6; /* light pink/red like dapp unknown */
+  font-weight: bold;
+}
+
+.asset-prov-row.error {
+  background-color: #fff3b0; /* soft yellow like dapp warning/error */
+  font-weight: bold;
+  border-color: #f5e1a1;
+}
+
+.asset-prov-info {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.asset-prov-info code {
+  display: block;        /* Force it to a new line */
+  white-space: pre-wrap;  /* Allow it to wrap to the next line */
+  word-break: break-all;  /* Force breaks even in long strings with no spaces */
+  margin-top: 0.5em;      /* Give it some breathing room */
+  background: #f9f9f9;    /* Make it look like a distinct block */
+  padding: 4px;
+}
+
+.asset-prov-actions {
+  display: flex;
+  gap: 0.5em;
+}
+
+.asset-prov-actions button {
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.asset-prov-close {
+  cursor: pointer;
+  font-weight: bold;
+  color: #999;
+}
+
+.asset-prov-close:hover {
+  color: #000;
+}
+
+.asset-prov-status {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  margin-right: 6px;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+
+.asset-prov-enabled {
+  margin-left: 8px;          /* space from the status/time */
+  vertical-align: middle;    /* align with icon/text */
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* right-side enabled container */
+.asset-prov-enabled-container {
+  margin-left: auto;        /* push to far right */
+  display: flex;
+  align-items: center;
+  gap: 4px;                 /* space between checkbox and text */
+}

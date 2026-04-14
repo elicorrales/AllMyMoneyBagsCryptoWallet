@@ -1,0 +1,53 @@
+
+
+@keyframes colorGlowSweep {
+  0% {
+    opacity: 0.6;
+    color: #886f00;
+    text-shadow: none;
+  }
+  10% {
+    opacity: 1;
+    color: #886f00;
+    text-shadow: 0 0 2px #bfa531;
+  }
+  30% {
+    color: #ffdb4d;
+    text-shadow: -10px 0 6px #ffdb4d;
+  }
+  50% {
+    color: #ffdb4d;
+    text-shadow: 0 0 12px #ffdb4d;
+  }
+  70% {
+    color: #ffdb4d;
+    text-shadow: 10px 0 6px #ffdb4d;
+  }
+  90% {
+    color: #886f00;
+    text-shadow: 0 0 2px #bfa531;
+  }
+  100% {
+    opacity: 0.6;
+    color: #886f00;
+    text-shadow: none;
+  }
+}
+
+#mainTitle {
+  font-size: 48px;
+  font-weight: 1000;
+  font-family: 'Trebuchet MS', Verdana, Tahoma, Arial, sans-serif;
+  color: #886f00;
+  animation: colorGlowSweep 12s ease-in-out infinite;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+}
+
+
+
+
+
+
+

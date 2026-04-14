@@ -1,0 +1,377 @@
+/* css/dapp.css dApp Connection Control & Status Buttons */
+
+#dappStatusWrapper {
+  position: fixed;
+  top: 16px;
+  right: 132px;
+  z-index: 1000;
+  display: none;
+  gap: 8px;
+}
+
+
+
+#dappStatusBtn {
+  font-size: 0.9em;
+  padding: 0.25em 0.8em;   /* Balanced padding for the text */
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: not-allowed;
+  white-space: nowrap;     /* Prevents wrapping to a second line */
+  
+  /* The "Expansion" Fixes: */
+  overflow: visible;       /* Stop hiding the characters */
+  text-overflow: clip;     /* Remove the ellipsis (...) */
+  width: auto;             /* Allow size to be dictated by content */
+  min-width: max-content;  /* Ensure it fits the longest possible state */
+  
+  position: relative;
+}
+
+#dappStatusBtn:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Blue: dApp Handling state */
+#dappStatusBtn.handling {
+  background-color: #cce5ff;
+  color: #004085;
+  border-color: #007bff;
+}
+
+/* Green: dApp Connected */
+#dappStatusBtn.connected {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #28a745;
+}
+
+/* Flashing red background (used via JS toggle) */
+#dappStatusBtn.flash-red {
+  background-color: #ffaaaa;
+  color: #900;
+  border-color: #c00;
+}
+
+#dappControlBtn {
+  font-size: 0.9em;
+  padding: 0.25em 0.5em;
+  background-color: #ccc;
+  color: #555;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fix: Toggle cursor based on state */
+#dappControlBtn:disabled {
+  cursor: not-allowed;
+}
+
+#dappControlBtn:not(:disabled) {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+/* Control button: blueish when connected/wired */
+#dappControlBtn.connected {
+  background-color: #cce5ff;
+  color: #004085;
+  border-color: #007bff;
+  cursor: pointer;
+}
+
+/* Optional: hover effect only when connected */
+#dappControlBtn.connected:hover {
+  background-color: #b8daff;
+}
+
+#dappHandlingPanel {
+  background-color: white;
+  padding: 1em;
+  box-sizing: border-box;
+  min-height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+#dappRequestInfo {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+  box-sizing: border-box;
+}
+
+.dappToggleWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 16px;
+  font-size: 0.9em;
+}
+
+.toggle {
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle.on {
+  background-color: #4caf50;
+}
+
+.toggleSlider {
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  transition: left 0.3s;
+}
+
+.toggle.on .toggleSlider {
+  left: 21px;
+}
+
+/* Tabs container */
+.dappTabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Tab buttons */
+.tab-btn {
+  flex: 1;
+  padding: 0.25em 0.5em;
+  background-color: #eee;
+  border: 1px solid #aaa;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tab-btn.active {
+  background-color: #fff;
+  font-weight: bold;
+}
+
+/* Panels container */
+.tab-panel {
+  border: 1px solid #aaa;
+  border-radius: 0 0 4px 4px;
+  background-color: #fff;
+  padding: 1em;
+}
+
+/* Hide inactive panels */
+.tab-panel[hidden] {
+  display: none;
+}
+
+/* Detail panel controls (top of Details tab) */
+.dapp-detail-controls {
+  display: block;
+}
+
+/* Checkbox styling */
+.dapp-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dapp-checkbox input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* Freeze emphasis */
+#dappFreezeCheckbox:checked + span {
+  font-weight: bold;
+  color: #b45309;
+}
+
+.dapp-detail-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+/* Split button styling */
+.dapp-split-btn {
+  font-size: 0.9em;
+  padding: 0.25em 0.5em;
+  background-color: #cce5ff;
+  color: #004085;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specific hover to override global green button:hover */
+.dapp-split-btn:hover:enabled {
+  background-color: #b8daff;
+}
+
+.dapp-split-btn .dapp-split-main {
+  flex: 1;
+  text-align: center;
+}
+
+.dapp-split-btn .dapp-split-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-left: 1px solid #007bff;
+  background-color: rgba(0,0,0,0.05);
+}
+
+.dapp-split-btn .dapp-split-arrow:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.dapp-split-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  min-width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 1001;
+}
+
+.dapp-split-dropdown button {
+  width: 100%;
+  padding: 6px 10px;
+  white-space: nowrap;
+  text-align: left;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.dapp-split-dropdown button:hover {
+  background-color: #eee;
+}
+
+/* Generic hover darken for enabled blue-ish buttons */
+#dappStatusBtn:not(:disabled):hover,
+#dappControlBtn.connected:hover,
+.dapp-split-btn:hover {
+  filter: brightness(0.92);
+}
+
+#dappControlBtn:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+/* --- Split button dropdown wrapper fix --- */
+#dappControlSplitWrapper {
+  display: inline-block;
+  position: relative;
+}
+
+
+.dappLabel {
+  font-size: 0.9em;
+  line-height: 1;
+  padding: 0.2em 0.5em;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  opacity: 0.7;
+}
+
+.dappLabel {
+  position: relative; /* Safe: Just establishes a reference point */
+}
+
+.dappLabel:hover::after {
+  content: attr(data-tooltip); 
+  position: absolute;
+  top: 115%; /* Spaced slightly below the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(51, 51, 51, 0.95);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 15px; /* Controlled size */
+  white-space: nowrap;
+  z-index: 1100;
+  pointer-events: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#dappNoAddressShrunk,
+#dappCurrentAddressShrunk {
+  width: 48px;
+}
+
+#dappNoNetworkShrunk,
+#dappCurrentNetworkShrunk {
+  width: 48px;
+}
+
+#dappNoAddressShrunk,
+#dappCurrentAddressShrunk,
+#dappNoAddress,
+#dappCurrentAddress,
+#dappNoNetworkShrunk,
+#dappCurrentNetworkShrunk,
+#dappNoNetwork,
+#dappCurrentNetwork {
+  background-color: #fff;
+  cursor: default;
+  color: #000;
+}
+
+.populated {
+  opacity: 1;
+}
+
+.dapp-detail-search {
+  margin-left: auto;   /* pushes to far right */
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  width: 160px;
+}
+
+.dapp-mismatch {
+  background-color: #ffcccc !important;
+  border-color: #cc0000 !important;
+  color: #900 !important;
+  animation: dappFlash 0.4s ease-in-out 2;
+}
+
+@keyframes dappFlash {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(0.75); }
+  100% { filter: brightness(1); }
+}

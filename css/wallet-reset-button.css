@@ -1,0 +1,80 @@
+
+    #closeAppButton {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      font-size: 36px;
+      padding: 4px 8px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1000;
+      user-select: none;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    #closeAppButton:hover {
+      background-color: #e6e6e6; /* light gray */
+      border-color: #999;        /* slightly darker border */
+    }
+
+    .reset-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    .reset-hidden {
+      display: none;
+    }
+
+    .reset-modal-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      max-width: 90%;
+      width: 320px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .reset-modal-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .reset-modal-actions button {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .reset-modal-items {
+      text-align: left;
+      margin: 12px 0;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 14px;
+      padding: 0 4px;
+    }
+
+    .reset-modal-items ul {
+      margin: 4px 0 0 16px;
+      padding: 0;
+    }
+
+    .reset-modal-items li {
+      margin-bottom: 2px;
+    }
+

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fake dApp Tester</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .block { margin-bottom: 15px; }
+    button { display: block; margin-top: 5px; padding: 8px; width: 300px; }
+    input { display: block; margin-top: 5px; padding: 6px; width: 280px; }
+  </style>
+</head>
+<body>
+
+<h3 id="title">Fake dApp Tester</h3>
+
+<!-- 1. CONNECT -->
+<div class="block">
+  <label>Address</label>
+  <input id="addr" placeholder="0x..." />
+
+  <label>Chain ID</label>
+  <input id="chain" placeholder="0x1" />
+
+  <button onclick="simulateConnect()">Simulate Connect</button>
+</div>
+
+<!-- need real connect button here, but we also use the same above address + chain id -->
+<!-- need the real connect funct below in scripts -->
+
+<div class="block">
+  <button onclick="sendRealConnect()">Real Connect</button>
+</div>
+
+<div class="block">
+  <button onclick="sendMinEthTx()">MIN eth_sendTransaction</button>
+</div>
+
+
+<div class="block">
+  <button onclick="sendMinWalletTx()">MIN wallet_sendTransaction</button>
+</div>
+
+
+<div class="block">
+  <button onclick="sendFakeTest()">FAKE_DAPP_TEST</button>
+</div>
+
+
+<div class="block">
+  <button onclick="sendFakeDisconnect()">Fake Disconnect</button>
+</div>
+
+
+<div class="block">
+  <button onclick="sendRealDisconnect()">Real Disconnect</button>
+</div>
+
+<div class="block">
+  <button onclick="wrapLow()">Wrap Low Bal tBNB→WBNB</button>
+</div>
+
+<div class="block">
+  <button onclick="wrapHigh()">Wrap High Bal tBNB→WBNB</button>
+</div>
+
+<script>
+const STORAGE_KEYS = {
+  addr: 'fakeDapp_addr',
+  chain: 'fakeDapp_chain'
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  const savedAddr = localStorage.getItem(STORAGE_KEYS.addr);
+  const savedChain = localStorage.getItem(STORAGE_KEYS.chain);
+
+  if (savedAddr) document.getElementById('addr').value = savedAddr;
+  if (savedChain) document.getElementById('chain').value = savedChain;
+});
+
+const utils = window.injectedDappUtils;
+const state = utils.providerState;
+
+function updateUiFromState() {
+  const titleEl = document.getElementById('title');
+
+  if (state.isConnected && state.accounts && state.accounts.length > 0) {
+    document.body.style.backgroundColor = '#e6ffed'; // light green
+    titleEl.textContent = 'Fake dApp Tester (Connected)';
+  } else {
+    document.body.style.backgroundColor = '';
+    titleEl.textContent = 'Fake dApp Tester';
+  }
+}
+
+// simple polling watcher
+setInterval(updateUiFromState, 300);
+
+/* ------------------ CONNECT ------------------ */
+function simulateConnect() {
+  const addr = document.getElementById('addr').value;
+  const chain = document.getElementById('chain').value;
+
+  // persist (optional)
+  localStorage.setItem(STORAGE_KEYS.addr, addr);
+  localStorage.setItem(STORAGE_KEYS.chain, chain);
+
+  // mark as dapp but NOT connected
+  state.isDapp = true;
+  state.isConnected = false;
+  state.accounts = addr ? [addr] : [];
+  state.currentChainId = chain;
+  state.currentNetworkType = 'EVM';
+
+  console.log('[simulateConnect] (pre-request state)', state);
+
+  const payload = {
+    isDapp: state.isDapp,
+    isConnected: state.isConnected, // MUST be false
+    accounts: state.accounts.slice(),
+    currentChainId: state.currentChainId
+  };
+
+  const msg = {
+    to: 'wallet',
+    type: 'eth_requestAccounts',
+    origin: location.origin,
+    href: location.href,
+    payload
+  };
+
+  console.log('[eth_requestAccounts OUT]', msg);
+
+  utils.postToWallet(msg);
+}
+
+function sendRealConnect() {
+  const addr = document.getElementById('addr').value;
+  const chain = document.getElementById('chain').value;
+
+  // mark as dapp, set initial providerState values
+  state.isDapp = true;
+  state.isConnected = false;
+  state.accounts = addr ? [addr] : [];
+  state.currentChainId = chain;
+  state.currentNetworkType = 'EVM';
+
+  // call the provider request
+  if (window.ethereum && window.ethereum.request) {
+    window.ethereum.request({ method: 'eth_requestAccounts' })
+      .then(accounts => {
+        console.log('[eth_requestAccounts] approved', accounts);
+      })
+      .catch(err => {
+        console.error('[eth_requestAccounts] rejected', err);
+      });
+  }
+}
+
+
+function sendMinEthTx() {
+  const fromAddr = document.getElementById('addr').value;
+  const msg = {
+    to: 'wallet',
+    type: 'eth_sendTransaction',
+    origin: location.origin,
+    href: location.href,
+    params: [
+      {
+        from: fromAddr,
+        to: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+        data: '0xd0e30db0',
+        value: '0x38d7ea4c68000',
+        gas: '0xc327',
+        gasPrice: '0x2540be400'
+      }
+    ]
+  };
+
+  console.log('[eth_sendTransaction OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+function sendMinWalletTx() {
+  const fromAddr = document.getElementById('addr').value;
+  const msg = {
+    to: 'wallet',
+    type: 'wallet_sendTransaction',
+    origin: location.origin,
+    href: location.href,
+    params: [
+      {
+        from: fromAddr,
+        to: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+        data: '0xd0e30db0',
+        value: '0x38d7ea4c68000',
+        gas: '0xc327',
+        gasPrice: '0x2540be400'
+      }
+    ]
+  };
+
+  console.log('[wallet_sendTransaction OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+
+function sendFakeTest() {
+  const msg = {
+    to: 'wallet',
+    type: 'FAKE_DAPP_TEST',
+    origin: location.origin,
+    href: location.href,
+    params: [
+      {
+        testField: 'hello',
+        timestamp: Date.now()
+      }
+    ]
+  };
+
+  console.log('[FAKE_DAPP_TEST OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+function wrapLow() {
+  const fromAddr = document.getElementById('addr').value;
+
+  const msg = {
+    to: 'wallet',
+    type: 'eth_sendTransaction',
+    origin: location.origin,
+    href: "https://pancakeswap.finance/swap?chain=bscTestnet&outputCurrency=0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    params: [
+      {
+        from: fromAddr,
+        to: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+        data: '0xd0e30db0',
+        value: '0x5af3107a4000', // LOW
+        gas: '0xc327',
+        gasPrice: '0x2540be400'
+      }
+    ],
+    payload: {
+      isDapp: true,
+      isConnected: true
+    }
+  };
+
+  console.log('[wrapLow OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+function wrapHigh() {
+  const fromAddr = document.getElementById('addr').value;
+
+  const msg = {
+    to: 'wallet',
+    type: 'eth_sendTransaction',
+    origin: location.origin,
+    href: "https://pancakeswap.finance/swap?chain=bscTestnet&outputCurrency=0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    params: [
+      {
+        from: fromAddr,
+        to: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+        data: '0xd0e30db0',
+        value: '0x585eb42bf2e2c00', // HIGH
+        gas: '0xc327',
+        gasPrice: '0x2540be400'
+      }
+    ],
+    payload: {
+      isDapp: true,
+      isConnected: true
+    }
+  };
+
+  console.log('[wrapHigh OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+
+
+function sendFakeDisconnect() {
+  const msg = {
+    to: 'wallet',
+    type: 'wallet_revokePermissions',
+    origin: location.origin,
+    href: location.href,
+    networkType: 'EVM',
+    isNotification: true,
+    params: [],
+    payload: {
+      pushedByTimer: false,
+      isDapp: true,
+      ethRequest: 'wallet_revokePermissions',
+      isConnected: false,
+      accounts: [],
+      currentChainId: null
+    }
+  };
+
+  console.log('[wallet_revokePermissions OUT]', msg);
+  utils.postToWallet(msg);
+}
+
+function sendRealDisconnect() {
+  if (window.ethereum && window.ethereum.request) {
+    window.ethereum.request({ method: 'wallet_revokePermissions' })
+      .then(() => console.log('[wallet_revokePermissions] success'))
+      .catch(err => console.error('[wallet_revokePermissions] error', err));
+  } else {
+    console.warn('Ethereum provider not found.');
+  }
+}
+
+</script>
+
+</body>
+</html>

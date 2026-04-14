@@ -1,0 +1,46 @@
+/*wallet-iframe/wallet-iframe.css*/
+/* ---- Reset html/body to fill viewport ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---- Parent body wrapper ---- */
+#parentBody {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;  /* <--- remove padding */
+  position: relative;
+  border: 0 solid transparent;
+}
+
+
+/* ---- Progressive warning borders ---- */
+@media (max-width: 60em)  { #parentBody { border: 5px solid green; } }
+@media (max-width: 50em)  { #parentBody { border: 5px solid blue; } }
+@media (max-width: 40em)  { #parentBody { border: 5px solid yellow; } }
+@media (max-width: 35em)  { #parentBody { border: 5px solid orange; } }
+@media (max-width: 30em)  { #parentBody { border: 5px solid red; } }
+
+/* ---- iframe wrapper ---- */
+#iframeWrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- iframe itself ---- */
+#iframeWrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+

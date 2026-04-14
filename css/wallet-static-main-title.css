@@ -1,0 +1,15 @@
+#mainTitle {
+  font-size: 48px;
+  font-weight: 1000;
+  font-family: 'Trebuchet MS', Verdana, Tahoma, Arial, sans-serif;
+  color: #886f00;
+  text-shadow:
+    0 0 4px #bfa531,
+    0 0 8px #ffdb4d;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  opacity: 1;
+}
+
+

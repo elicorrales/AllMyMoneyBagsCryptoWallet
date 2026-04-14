@@ -1,0 +1,87 @@
+/* css/dapp-row.css */
+
+.dapp-unknown {
+  background-color: #ffe6e6; /* light pinkish/red */
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5em 0;
+  border-radius: 4px 4px 0 0; /* optional, rounds top corners */
+}
+/*
+.dapp-counter {
+  display: none;
+}
+*/
+.dapp-counter.visible {
+  display: inline;
+}
+
+.dapp-row {
+  background: white;
+  border: 1px solid #ddd;
+  position: relative;
+  padding: 1.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.dapp-row.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.dapp-row.unhandled {
+  background-color: #ffe6e6; /* light pinkish/red */
+}
+
+.dapp-text {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.dapp-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  white-space: nowrap;
+}
+
+.dapp-buttons button {
+  padding: 0.4em 1em;
+}
+
+
+.dapp-row-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #999;
+}
+
+.dapp-row-close:hover {
+  color: #000;
+}
+
+/* Fix for the top-level fields like href and params */
+.dapp-top-fields {
+    white-space: pre-wrap;       /* 🟢 This preserves your newlines but wraps long lines */
+    word-break: break-word;      /* 🟢 Breaks long URLs or strings */
+    overflow-wrap: break-word;
+    font-family: monospace;      /* Keeps the look consistent */
+    margin: 0;                   /* Optional: clean up default pre margins */
+}
+
+/* Ensure code tags inside the text area don't fight the layout */
+.dapp-text code {
+    white-space: pre-wrap;
+    word-break: break-all;       /* Good for very long hex strings or params */
+}

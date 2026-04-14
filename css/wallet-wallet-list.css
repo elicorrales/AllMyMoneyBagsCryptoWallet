@@ -1,0 +1,33 @@
+/* wallet-wallet-list.css */
+
+/* Container for each wallet row */
+.wallet-row {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Hover state to slightly change background */
+.wallet-row:hover {
+  background-color: #eee;
+}
+
+/* Number block to left-align numbers with consistent width */
+.wallet-number {
+  width: 2em; /* fixed width */
+  text-align: right;
+  margin-right: 12px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Wallet name takes the rest of the row */
+.wallet-name {
+  font-weight: 600;
+  font-size: 16px;
+  flex-grow: 1;
+}
+

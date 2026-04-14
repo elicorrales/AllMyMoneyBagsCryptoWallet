@@ -1,0 +1,26 @@
+
+#backArrow {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 44px;           /* fixed square size */
+  height: 44px;
+  font-size: 32px;       /* bigger */
+  font-weight: 700;      /* bold */
+  line-height: 44px;     /* vertically center with line height */
+  text-align: center;    /* horizontally center text */
+  cursor: pointer;
+  user-select: none;
+  z-index: 1000;
+
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  display: none;
+}
+#backArrow:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+

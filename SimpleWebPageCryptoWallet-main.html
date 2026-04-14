@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<!-- SimpleWebPageCryptoWallet-main.html -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>All My Money Bags</title>
+  <link rel="stylesheet" href="css/wallet.css" />
+  <link rel="stylesheet" href="css/wallet-modals.css" />
+  <link rel="stylesheet" href="css/wallet-back-arrow.css" />
+  <link rel="stylesheet" href="css/asset-prov.css" />
+  <link rel="stylesheet" href="css/asset-prov-row.css" />
+  <!--<link rel="stylesheet" href="css/wallet-static-main-title.css" />-->
+  <link rel="stylesheet" href="css/wallet-animated-main-title.css" />
+  <link rel="stylesheet" href="css/wallet-active-wallet-name.css" />
+  <link rel="stylesheet" href="css/wallet-password-panel.css" />
+  <link rel="stylesheet" href="css/wallet-reset-button.css" />
+  <link rel="stylesheet" href="css/wallet-yes-or-no-action.css" />
+  <link rel="stylesheet" href="css/wallet-dashboard.css" />
+  <link rel="stylesheet" href="css/wallet-help-icon.css" />
+  <link rel="stylesheet" href="css/dapp.css" />
+  <link rel="stylesheet" href="css/dapp-row.css" />
+  <link rel="stylesheet" href="css/wallet-crypto-list.css" />
+  <link rel="stylesheet" href="css/wallet-crypto-detail.css" />
+  <link rel="stylesheet" href="css/wallet-crypto-send.css" />
+  <script src="wallet-ui-common-js/wallet-ui-tab-or-page-lock.js" defer></script>
+  <script defer>
+    window.addEventListener('DOMContentLoaded', () => {
+      enforceMutualExclusion('wallet_mutual_exclude_group_logged_off_intro_dashboard');
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="backArrow">&#8592;</div>
+
+
+<div id="dappStatusWrapper">
+    <button id="dappNoNetworkShrunk" data-tooltip="Curr Network" class="dappLabel" data-address="">
+        <img src="icons/no-blockchain.svg" style="width:42px; height:42px;">
+    </button>
+    <button id="dappCurrentNetworkShrunk" class="dappLabel" data-address="">
+        <img src="icons/blockchain.svg" style="width:38px; height:38px;">
+    </button>
+    <button id="dappNoNetwork" class="dappLabel" data-chain="">Curr Network</button>
+    <button id="dappCurrentNetwork" class="dappLabel" data-chain="" data-networkType="" data-assetKey=""></button>
+
+    <button id="dappNoAddressShrunk" data-tooltip="Curr Address" class="dappLabel" data-address="">
+        <img src="icons/wallet-no-addr.svg" style="width:48px; height:48px;">
+    </button>
+    <button id="dappCurrentAddressShrunk" data-tooltip="" class="dappLabel" data-address="">
+        <img src="icons/wallet-addr.svg" style="width:38px; height:38px;">
+    </button>
+    <button id="dappNoAddress" data-tooltip="Curr Address" class="dappLabel" data-address="">Curr Address</button>
+    <button id="dappCurrentAddress" data-tooltip="" class="dappLabel" data-address=""></button>
+
+    <button id="dappControlBtn">DeFi Cmd</button>
+
+    <!-- 🔹 Split button + dropdown wrapper -->
+    <div id="dappControlSplitWrapper" class="dapp-split-wrapper">
+      <button id="dappControlSplitBtn" class="dapp-split-btn">
+        <span class="dapp-split-main">Disconnect</span>
+        <span class="dapp-split-arrow">▼</span>
+      </button>
+      <div id="dappControlSplitDropdown" class="dapp-split-dropdown">
+        <button id="changeNetworkBtn">Change Network</button>
+        <button id="tempBtn">Do Something Else</button>
+        <button id="disconnectBtn">Disconnect</button>
+      </div>
+    </div>
+    <button id="dappStatusBtn" disabled>DeFi Msgs...</button>
+</div>
+
+
+  <!-- Hamburger Menu (moved near the ✕ button) - page-level, conditioned on logged in-->
+  <div id="hamburgerMenuWrapper" style="display:none;">
+    <button id="hamburgerMenuBtn" aria-label="Menu">
+      ☰
+    </button>
+    <ul id="networkMenu">
+      <li id="settingsMenuItem">Settings</li>
+      <li id="resetAllMenuItem">Reset All...</li>
+      <li id="testAllAssetProvidersMenuItem">Test Providers...</li>
+      <li id="allAssetProvidersStatsMenuItem">Providers Stats...</li>
+      <li id="resetAllAssetProvidersMenuItem">Del Providers...</li>
+      <li id="resetAllDerivedAddressesMenuItem">Del Addresses...</li>
+      <li id="resetAllDerivedTokensMenuItem">Del Tokens...</li>
+      <li id="updateAllProvAssetsTokensStableMenuItem">Update All...</li>
+    </ul>
+  </div>
+
+  <!--Tied to BIG "X" upper-right of page - page-level, conidtioned on logged in-->
+  <div id="closeAppButton" title="Close App">✕</div>
+
+
+  <div id="resetOverlayModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Reset Wallet?</h3>
+      <p>This will erase all data stored in your browser. Are you sure?</p>
+
+      <div id="resetItemsList" class="modal-items">
+        <!-- JS will populate this -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="resetCancelBtn">Cancel</button>
+        <button id="resetConfirmBtn">I Understand, Erase</button>
+      </div>
+    </div>
+  </div>
+
+  <h1 id="mainTitle" style="text-align:center;">My Money Bags</h1>
+
+  <div id="activeWalletName-wrapper">
+    <span id="activeWalletName"></span>
+    <span id="editActiveWalletIcon" title="Edit Wallet" style="cursor:pointer; margin-left:8px;">✏️</span>
+  </div>
+
+
+  <!-- Password Panel -->
+  <section id="mainPasswordPanel" class="panel">
+    <h2 id="enterPassword">Enter Your Password<br><span id="walletNameDisplay"></span></h2>
+    <div class="password-wrapper">
+      <input
+        type="password"
+        id="mainPasswordInput"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      />
+      <div id="toggleMainPasswordVisibility">Show password</div>
+    </div>
+    <div id="mainPasswordError"></div>
+    <button id="mainPasswordContinueBtn" disabled>Continue</button>
+  </section>
+
+  <!-- dApp handling Panel -->
+  <section id="dappHandlingPanel" class="panel">
+    <h2>
+      Incoming dApp(DeFi) Messages:
+      <div class="dappToggleWrapper">
+        <span>Off/Clear</span> <!-- JS will update this to "On" or "Off" -->
+        <div id="dappToggle" class="toggle" role="switch" aria-checked="false" tabindex="0">
+          <div class="toggleSlider"></div>
+        </div>
+      </div>
+    </h2>
+
+    <!-- 🔹 Moved Freeze checkbox above tabs -->
+    <div id="dappFreezeWrapper" class="dapp-detail-row">
+      <label class="dapp-checkbox">
+        <input type="checkbox" id="dappFreezeDappMessagesCheckbox">
+        <span>Freeze Messages</span>
+      </label>
+      <label class="dapp-checkbox">
+        <input type="checkbox" id="dappFreezeDappMessagesOverrideCheckbox">
+        <span>Override Freeze</span>
+      </label>
+    </div>
+
+    <!-- Tab headers (CSS will lay these out horizontally) -->
+    <div class="dappTabs" role="tablist" aria-label="dApp panels">
+      <button type="button" id="tab-details" class="tab-btn" role="tab" aria-selected="false" aria-controls="detailsPanel">Details</button>
+      <button type="button" id="tab-summary" class="tab-btn active" role="tab" aria-selected="true" aria-controls="summaryPanel">Summary</button>
+    </div>
+
+    <!-- Tab content panels -->
+    <div id="tabPanels">
+
+      <!-- Summary panel (placeholder for now) -->
+      <div id="summaryPanel" class="tab-panel" role="tabpanel" aria-labelledby="tab-summary">
+        <div class="summary-placeholder" style="padding:1em;">
+          <p><strong>Summary (placeholder)</strong></p>
+          <p>One-line summary per incoming message will appear here.</p>
+          <ul>
+            <li>Type: EVM_PROV_UPDATE — https://search.brave.com</li>
+            <li>Type: eth_requestAccounts — https://app.example.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Details panel (existing behavior) -->
+      <div id="detailsPanel" class="tab-panel" role="tabpanel" aria-labelledby="tab-details" hidden>
+
+        <!-- Detail panel controls -->
+        <div class="dapp-detail-controls">
+
+          <!-- Row 1: Only the other 3 filtering checkboxes remain here -->
+          <div class="dapp-detail-row">
+            <label class="dapp-checkbox">
+              <input type="checkbox" id="dappAllMsgsCheckbox" checked>
+              <span>All</span>
+            </label>
+
+            <label class="dapp-checkbox">
+              <input type="checkbox" id="dappWarningsCheckbox">
+              <span>Unknown</span>
+            </label>
+
+            <label class="dapp-checkbox">
+              <input type="checkbox" id="dappErrorsCheckbox">
+              <span>Warnings/Errors</span>
+            </label>
+
+            <input type="text" id="dappDetailSearchInput" placeholder="Match..." class="dapp-detail-search"/>
+          </div>
+
+        </div>
+
+        <div id="dappRequestInfo"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Active Wallet Edit Panel -->
+  <section id="activeWalletEditPanel" class="panel">
+    <h2>Edit Wallet</h2>
+
+    <div class="wallet-edit-row">
+      <label for="editWalletNameInput">Wallet Name</label>
+      <input
+        type="text"
+        id="editWalletNameInput"
+        placeholder="Enter wallet name"
+      />
+      <button id="saveWalletNameBtn">Save</button>
+    </div>
+
+    <hr style="margin: 1.5em 0;">
+
+    <p>
+      Delete this wallet. The wallet still exists on the blockchain.
+      It is only removed from this app. If you have your seed phrase (words),
+      you can always re-import it.
+    </p>
+
+    <div class="wallet-delete-row">
+      <input
+        type="password"
+        id="deleteWalletPasswordInput"
+        placeholder="Need password to delete"
+      />
+      <button id="deleteWalletBtn" style="background-color:#c00; color:#fff;">
+        Delete Wallet
+      </button>
+    </div>
+
+    <hr style="margin: 1.5em 0;">
+
+    <div class="wallet-cancel-row" style="margin-top:1em; text-align:center;">
+      <button id="cancelWalletEditBtn" style="background-color:#28a745; color:#fff; padding:8px 16px; border-radius:6px; border:none; cursor:pointer;">
+        Cancel Edits
+      </button>
+   </div>
+  </section>
+
+<section id="allDigitalAssetsListPanel" class="panel">
+
+  <span id="assetHelpIcon" class="assetHelpIcon" title="What is this?">❓</span>
+
+  <!-- Native Asset List Panel -->
+  <section id="nativeAssetListPanel" class="panel digitalAssetPanel collapsed" style="display:block;">
+    <div class="crypto-list-header toggle-header">
+      <span class="toggle-icon">▼</span>
+      <span class="title">Native Digital Assets</span>
+      <span class="spacer"></span>
+      <button id="nativeAssetListRefreshBtn" class="cryptoListRefreshBtn" title="Refresh balances">🔄</button>
+    </div>
+    <div class="panel-body digitalPanelBody">
+      <div class="subtitle">(click for details)</div>
+      <div id="nativeAssetListContainer"><!-- rows here --></div>
+    </div>
+  </section>
+
+  <!-- Token List Panel -->
+  <section id="tokenListPanel" class="panel digitalAssetPanel collapsed" style="display:block;">
+    <div class="crypto-list-header toggle-header">
+      <span class="toggle-icon">▼</span>
+      <span class="title">Digital Token Assets</span>
+      <span class="spacer"></span>
+      <button id="tokenListRefreshBtn" class="cryptoListRefreshBtn" title="Refresh balances">🔄</button>
+    </div>
+    <div class="panel-body digitalPanelBody">
+      <div class="subtitle">(click for details)</div>
+      <div id="tokensListContainer"><!-- JS renders asset rows here --></div>
+    </div>
+  </section>
+
+  <!-- Stable Coins List Panel -->
+  <section id="stableCoinListPanel" class="panel digitalAssetPanel collapsed" style="display:block;">
+    <div class="crypto-list-header toggle-header">
+      <span class="toggle-icon">▼</span>
+      <span class="title">Stable Coins</span>
+      <span class="spacer"></span>
+      <button id="stableCoinListRefreshBtn" class="cryptoListRefreshBtn" title="Refresh balances">🔄</button>
+    </div>
+    <div class="panel-body digitalPanelBody">
+      <div class="subtitle">(click for details)</div>
+      <div id="stableCoinListContainer"><!-- JS renders asset rows here --></div>
+    </div>
+  </section>
+</section>
+
+
+  <!-- Native Asset Detail Panel -->
+  <section id="nativeAssetDetailPanel" class="panel">
+    <h2 id="nativeAssetDetailTitle"  class="cryptoDetailTitle">Crypto Name (SYM)</h2>
+    <div class="button-row">
+      <button id="nativeAssetSendButton">Send / Withdraw</button>
+      <button id="nativeAssetReceiveButton">Receive / Deposit</button>
+      <button id="nativeAssetDeFiButton" title="For all online dApps">DeFi</button>
+    </div>
+    <div id="nativeAssetReceiveAddressContainer"  class="receiveAddressContainer"><!-- Address goes here --></div>
+  </section>
+
+  <!-- Token Detail Panel -->
+  <section id="tokenDetailPanel" class="panel">
+    <h2 id="tokenDetailTitle"  class="cryptoDetailTitle">Crypto Name (SYM)</h2>
+    <div class="button-row">
+      <button id="tokenSendButton">Send / Withdraw</button>
+      <button id="tokenReceiveButton">Receive / Deposit</button>
+    </div>
+    <div id="tokenReceiveAddressContainer"  class="receiveAddressContainer"><!-- Address goes here --></div>
+  </section>
+
+
+  <!-- StableCoin Detail Panel -->
+  <section id="stableCoinDetailPanel" class="panel">
+    <h2 id="stableCoinDetailTitle"  class="cryptoDetailTitle">Crypto Name (SYM)</h2>
+    <div class="button-row">
+      <button id="stableCoinSendButton">Send / Withdraw</button>
+      <button id="stableCoinReceiveButton">Receive / Deposit</button>
+    </div>
+    <div id="stableCoinReceiveAddressContainer"  class="receiveAddressContainer"><!-- Address goes here --></div>
+  </section>
+
+
+  <!-- Native Asset Send Panel -->
+  <section id="nativeAssetSendPanel" class="crypto-send-panel panel">
+    <h2 id="nativeAssetSendPanelTitle" class="crypto-send-title">Send Crypto</h2>
+
+    <div class="crypto-send-form-row">
+      <label for="nativeAssetSendToAddress" class="crypto-send-label">Recipient Address</label>
+      <input type="text" id="nativeAssetSendToAddress" class="crypto-send-input" placeholder="0x..." />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="nativeAssetSendAmount" class="crypto-send-label">
+        Amount to Send
+        <span id="nativeAssetSendMaxAmountLink" class="crypto-send-max-amount-link"></span>
+      </label>
+      <input type="text" id="nativeAssetSendAmount" class="crypto-send-input" placeholder="e.g. 0.5" />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="nativeAssetSendEstimatedFee" class="crypto-send-label">
+        Estimated Fee
+        <span id="nativeAssetSendFeeHelpIcon" class="crypto-send-help-icon" title="What is a fee?">❓</span>
+      </label>
+      <div class="crypto-send-fee-row">
+        <input type="text" id="nativeAssetSendEstimatedFee" class="crypto-send-input crypto-send-fee-input" readonly placeholder="Waiting for Continue…" />
+      </div>
+    </div>
+
+    <div class="crypto-send-button-row">
+      <button id="nativeAssetSendContinueButton" class="crypto-send-button">Continue</button>
+      <button id="nativeAssetSendSendButton" class="crypto-send-button" style="display:none;">Send</button>
+      <button id="nativeAssetSendResetButton" class="crypto-send-button" style="display:none;">Reset</button>
+    </div>
+  </section>
+
+  <!-- Token Send Panel -->
+  <section id="tokenSendPanel" class="crypto-send-panel panel">
+    <h2 id="tokenSendPanelTitle" class="crypto-send-title">Send Crypto</h2>
+
+    <div class="crypto-send-form-row">
+      <label for="tokenSendToAddress" class="crypto-send-label">Recipient Address</label>
+      <input type="text" id="tokenSendToAddress" class="crypto-send-input" placeholder="0x..." />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="tokenSendAmount" class="crypto-send-label">
+        Amount to Send
+        <span id="tokenSendMaxAmountLink" class="crypto-send-max-amount-link"></span>
+      </label>
+      <input type="text" id="tokenSendAmount" class="crypto-send-input" placeholder="e.g. 0.5" />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="tokenSendEstimatedFee" class="crypto-send-label">
+        Estimated Fee
+        <span id="tokenSendFeeHelpIcon" class="crypto-send-help-icon" title="What is a fee?">❓</span>
+      </label>
+      <div class="crypto-send-fee-row">
+        <input type="text" id="tokenSendEstimatedFee" class="crypto-send-input crypto-send-fee-input" readonly placeholder="Waiting for Continue…" />
+      </div>
+    </div>
+
+    <div class="crypto-send-button-row">
+      <button id="tokenSendContinueButton" class="crypto-send-button">Continue</button>
+      <button id="tokenSendSendButton" class="crypto-send-button" style="display:none;">Send</button>
+      <button id="tokenSendResetButton" class="crypto-send-button" style="display:none;">Reset</button>
+    </div>
+  </section>
+
+
+  <!-- StableCoin Send Panel -->
+  <section id="stableCoinSendPanel" class="crypto-send-panel panel">
+    <h2 id="stableCoinSendPanelTitle" class="crypto-send-title">Send Crypto</h2>
+
+    <div class="crypto-send-form-row">
+      <label for="stableCoinSendToAddress" class="crypto-send-label">Recipient Address</label>
+      <input type="text" id="stableCoinSendToAddress" class="crypto-send-input" placeholder="0x..." />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="stableCoinSendAmount" class="crypto-send-label">
+        Amount to Send
+        <span id="stableCoinSendMaxAmountLink" class="crypto-send-max-amount-link"></span>
+      </label>
+      <input type="text" id="stableCoinSendAmount" class="crypto-send-input" placeholder="e.g. 0.5" />
+    </div>
+
+    <div class="crypto-send-form-row">
+      <label for="stableCoinSendEstimatedFee" class="crypto-send-label">
+        Estimated Fee
+        <span id="stableCoinSendFeeHelpIcon" class="crypto-send-help-icon" title="What is a fee?">❓</span>
+      </label>
+      <div class="crypto-send-fee-row">
+        <input type="text" id="stableCoinSendEstimatedFee" class="crypto-send-input crypto-send-fee-input" readonly placeholder="Waiting for Continue…" />
+      </div>
+    </div>
+
+    <div class="crypto-send-button-row">
+      <button id="stableCoinSendContinueButton" class="crypto-send-button">Continue</button>
+      <button id="stableCoinSendSendButton" class="crypto-send-button" style="display:none;">Send</button>
+      <button id="stableCoinSendResetButton" class="crypto-send-button" style="display:none;">Reset</button>
+    </div>
+  </section>
+
+<!-- Asset Provider Stats Panel -->
+<section id="assetProviderStatsPanel" class="panel" style="display:none">
+  <h2>Asset Provider Statistics</h2>
+
+  <!-- Filter checkboxes -->
+  <div class="asset-prov-filters">
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvAllCheckbox" checked>
+      <span>All</span>
+    </label>
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvErrorsCheckbox">
+      <span>Errors</span>
+    </label>
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvUnusedCheckbox">
+      <span>Unused</span>
+    </label>
+    <!-- search box -->
+    <input type="text" id="assetProvSearchBox" placeholder="Search..." style="margin-left:auto; padding:0.3em 0.5em;">
+  </div>
+
+  <!-- Scrollable container for provider rows -->
+  <div id="assetProvListContainer" class="asset-prov-list">
+    <!-- JS will populate provider rows here -->
+  </div>
+</section>
+
+  <!-- Wallet Status Message - this is page-level, conditioned on logged in -->
+  <!-- we need a 'Status Messages:' heading here -->
+  <div id="walletStatusContainer" class="box">
+
+    <div style="font-weight:bold; margin-bottom:0.3em;">Status:</div>
+    <div id="walletStatus"></div>
+  </div>
+
+  <!-- Generic Informative "OK" modal -->
+  <div id="infoOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="infoModalTitle" aria-describedby="infoModalDesc">
+    <div class="modal-box">
+      <h3 id="infoModalTitle">Notice:</h3>
+      <p id="infoModalMessage" style="margin-bottom: 8px;"></p>
+      <p id="infoModalDetails" style="color: #666;"></p>
+      <div class="modal-actions">
+        <button id="infoOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Busy/Please Wait Modal (no buttons) -->
+  <div id="busyOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="busyModalTitle" aria-describedby="busyModalMessage">
+    <div class="modal-box">
+      <!-- Flex row: spinner + heading -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="spinner" id="busySpinner"></div>
+        <h3 id="busyModalTitle" style="margin: 0;">Please Wait</h3>
+      </div>
+
+      <!-- Dynamic message (below) -->
+      <div id="busyMessageContainer" style="margin-top: 12px;">
+        <p id="busyModalMessage" style="font-size: 16px; margin: 0;"></p>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div id="yesOrNoActionButton" title="Some Title">✕</div>
+  -->
+  <div id="yesOrNoOverlayModal" class="yesorno-modal-overlay hidden">
+    <div class="yesorno-modal-box">
+      <h3>Some Message</h3>
+      <p>The details the details the details</p>
+
+      <div id="yesOrNoDetails" class="yesorno-modal-items">
+      </div>
+
+      <div class="yesorno-modal-actions">
+        <button id="yesOrNoNegativeBtn">Replaced By Param</button>
+        <button id="yesOrNoPositiveBtn">Replaced By Param</button>
+      </div>
+    </div>
+  </div>
+
+  <!----------------------------------------------------------------->
+  <!-- load all the rest of the scripts-->
+  <!----------------------------------------------------------------->
+  <script src="wallet-main-ui-js/wallet-main-ui-page-included-scripts.js"></script>
+</body>
+
+</html>
+<!-- SimpleWebPageCryptoWallet-main.html -->
+<!-- END OF FILE -->

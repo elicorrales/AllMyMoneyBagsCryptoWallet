@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--SimpleWebPageCryptoWallet-loggedoff.html-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Wallet Logged Off</title>
+  <link rel="stylesheet" href="css/wallet.css" />
+  <link rel="stylesheet" href="css/wallet-modals.css" />
+  <link rel="stylesheet" href="css/wallet-animated-main-title.css" />
+  <link rel="stylesheet" href="css/wallet-start-page.css" />
+  <link rel="stylesheet" href="css/wallet-yes-or-no-action.css" />
+  <script src="wallet-ui-common-js/wallet-ui-tab-or-page-lock.js" defer></script>
+
+<!----------------------------------------------------------------->
+<!-- locking mechanism - allows only 1 wallet page at a time -->
+<!----------------------------------------------------------------->
+  <script defer>
+    window.addEventListener('DOMContentLoaded', () => {
+      enforceMutualExclusion('wallet_mutual_exclude_group_logged_off_intro_dashboard');
+    });
+  </script>
+</head>
+
+<body>
+
+  <!--Tied to BIG "X" upper-right of page -->
+  <div id="closeAppButton" title="Close App">✕</div>
+
+
+  <h1 id="mainTitle" style="text-align:center;">All My Money Bags</h1>
+
+  <!-- Possible reasons (controlled via JS) -->
+  <section id="loggedOffReason">
+    <p id="reasonTimeout" class="hidden"></p>
+    <p id="reasonError" class="hidden">An error occurred. Please restart the wallet.</p>
+  </section>
+
+  <!-- Technical details -->
+  <section id="technicalDetailsPanel" class="panel">
+    <h2>Saved Wallet Data</h2>
+    <div id="resetItemsList" class="modal-items">
+      <!-- JS will populate this with fake/reset-style data -->
+    </div>
+  </section>
+
+  <!-- Restart Wallet -->
+  <div class="start-btn-wrapper">
+    <img src="images/money-bag-2.svg" alt="" class="btn-icon" />
+    <button id="startWalletBtn">Open</button>
+  </div>
+
+  <!-- Generic Informative "OK" modal -->
+  <div id="infoOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="infoModalTitle" aria-describedby="infoModalDesc">
+    <div class="modal-box">
+      <h3 id="infoModalTitle">Notice:</h3>
+      <p id="infoModalMessage" style="margin-bottom: 8px;"></p>
+      <p id="infoModalDetails" style="color: #666;"></p>
+      <div class="modal-actions">
+        <button id="infoOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Busy/Please Wait Modal (no buttons) -->
+  <div id="busyOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="busyModalTitle" aria-describedby="busyModalMessage">
+    <div class="modal-box">
+      <!-- Flex row: spinner + heading -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="spinner" id="busySpinner"></div>
+        <h3 id="busyModalTitle" style="margin: 0;">Please Wait</h3>
+      </div>
+
+      <!-- Dynamic message (below) -->
+      <div id="busyMessageContainer" style="margin-top: 12px;">
+        <p id="busyModalMessage" style="font-size: 16px; margin: 0;"></p>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div id="yesOrNoActionButton" title="Some Title">✕</div>
+  -->
+  <div id="yesOrNoOverlayModal" class="yesorno-modal-overlay hidden">
+    <div class="yesorno-modal-box">
+      <h3>Some Message</h3>
+      <p>The details the details the details</p>
+
+      <div id="yesOrNoDetails" class="yesorno-modal-items">
+      </div>
+
+      <div class="yesorno-modal-actions">
+        <button id="yesOrNoNegativeBtn">Replaced By Param</button>
+        <button id="yesOrNoPositiveBtn">Replaced By Param</button>
+      </div>
+    </div>
+  </div>
+
+  <!----------------------------------------------------------------->
+  <!-- load all the rest of the scripts-->
+  <!----------------------------------------------------------------->
+  <script src="wallet-loggedoff-ui-js/wallet-loggedoff-ui-page-included-scripts.js"></script>
+
+</body>
+
+</html>
+<!--SimpleWebPageCryptoWallet-loggedoff.html-->
+<!--END OF FILE -->

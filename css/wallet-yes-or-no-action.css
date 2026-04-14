@@ -1,0 +1,87 @@
+#yesOrNoActionButton {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  font-size: 36px;
+  padding: 4px 8px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1000;
+  user-select: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.yesorno-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.hidden.yesorno-modal-overlay {
+  display: none;
+}
+
+.yesorno-modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 90%;
+  width: 360px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  word-break: break-word;
+}
+
+.yesorno-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.yesorno-modal-actions button {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.yesorno-modal-items {
+  text-align: left;
+  margin: 12px 0;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.yesorno-modal-items ul {
+  margin: 4px 0 0 16px;
+  padding: 0;
+}
+
+.yesorno-modal-items li {
+  margin-bottom: 2px;
+}
+
+
+/* Main message / heading */
+#yesOrNoOverlayModal h3 {
+  font-size: 28px;  /* adjust as needed */
+  margin-bottom: 12px;
+}
+
+/* Details paragraph */
+#yesOrNoOverlayModal p {
+  font-size: 22px;  /* adjust as needed */
+  margin-bottom: 12px;
+  line-height: 1.4;
+}

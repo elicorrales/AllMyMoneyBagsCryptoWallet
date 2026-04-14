@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "argon2-browser": "^1.18.0",
+    "find-process": "^2.0.0"
+  }
+}

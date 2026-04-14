@@ -1,0 +1,32 @@
+/* wallet-new-or-select.css */
+
+h1 {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+.panel {
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 2em;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.wallet-choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.back-button-row {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+

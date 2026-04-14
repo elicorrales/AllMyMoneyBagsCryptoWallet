@@ -1,0 +1,48 @@
+#loggedOffReason {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.hidden {
+  display: none;
+}
+
+#technicalDetailsPanel {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#technicalDetailsPanel h2 {
+  text-align: center;
+}
+
+.start-btn-wrapper {
+  text-align: center;
+  margin-top: 2em;
+}
+
+
+#startWalletBtn {
+  font-size: 2.0em;
+  line-height: 1;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+
+#startWalletBtn span {
+  font-size: 1.5em;
+}
+
+#startWalletBtn .btn-icon {
+  width: 4em;
+  height: 4em;
+}
+
+#startWalletBtn {
+  justify-content: center;
+}
+

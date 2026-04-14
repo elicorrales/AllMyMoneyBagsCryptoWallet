@@ -1,0 +1,97 @@
+/* wallet-active-wallet-name.css */
+
+#activeWalletName {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: inline-block;
+  color: #000;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;      /* centers horizontally */
+}
+
+#activeWalletName-wrapper {
+  margin-bottom: 1.5rem; /* adjust the spacing as needed */
+  text-align: center;  /* parent container centers inline-block child */
+}
+
+#editActiveWalletIcon {
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 6px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+#editActiveWalletIcon:hover {
+  background-color: #f0f0f0;
+}
+
+
+#activeWalletEditPanel {
+  border: 1px solid rgba(255, 255, 255, 0.4); /* thin, semi-transparent */
+  border-radius: 8px;
+  padding: 16px;
+  margin: 1.5em auto;
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.05); /* optional: faint tint */
+  backdrop-filter: blur(4px); /* subtle glass effect if supported */
+}
+
+#activeWalletEditPanel p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+#activeWalletEditPanel label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#activeWalletEditPanel input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+#activeWalletEditPanel input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#activeWalletEditPanel h2 {
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6); /* subtle outline for contrast */
+}
+
+#activeWalletEditPanel input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.9); /* solid but slightly translucent */
+  color: #000; /* dark text inside for readability */
+}
+
+#activeWalletEditPanel input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+

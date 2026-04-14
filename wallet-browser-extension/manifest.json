@@ -1,0 +1,53 @@
+{
+  "name": "All My Money Bags",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "description": "Injects a provider to connect dapps with your wallet",
+  "permissions": ["storage", "tabs", "scripting", "system.display"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["file://*/*"],
+      "js": ["wallet-content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+         "https://*/*",
+        "http://localhost/*"
+      ],
+      "js": ["dapp-content.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://localhost/*"
+      ],
+      "js": ["injected-dapp-utils.js", "injected-dapp.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected-wallet.js"],
+      "matches": ["file://*/*"]
+    },
+    {
+      "resources": ["injected-dapp.js"],
+      "matches": [
+        "https://*/*",
+        "http://localhost/*"
+      ]
+    },
+    {
+      "resources": ["blocked.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

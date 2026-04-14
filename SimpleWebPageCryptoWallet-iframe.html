@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--SimpleWebPageCryptoWallet-iframe.html-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SimpleWebPageCryptoWallet Shell</title>
+
+<!--
+  <link rel="stylesheet" href="css/wallet.css" />
+-->
+  <link rel="stylesheet" href="wallet-iframe/wallet-iframe.css" />
+
+  <script>
+    let iframe; // declare global
+  </script>
+
+</head>
+<body id="parentBody">
+
+  <div id="iframeWrapper">
+    <iframe id="pageFrame" src="" sandbox="allow-scripts allow-same-origin allow-downloads"></iframe>
+  </div>
+
+  <script>
+    iframe = document.getElementById('pageFrame'); // assign after element exists
+  </script>
+
+
+  <script src="wallet-proxy-client/wallet-proxy-client-crypt.js"></script>
+  <script src="wallet-proxy-client/wallet-proxy-client.js"></script>
+
+
+  <script src="wallet-iframe/proxy-handler.js"></script>
+
+  <script src="wallet-iframe/navigation.js"></script>
+
+  <script src="wallet-iframe/secret-session.js"></script>
+
+</body>
+</html>
+

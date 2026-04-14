@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background: #000;
+            color: #ff4444;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            text-align: center;
+            margin: 0;
+        }
+        h1 { font-size: 4rem; margin-bottom: 1.5rem; }
+        p { font-size: 1.6rem; margin: 0.5rem 0; }
+        button {
+            background: #222;
+            color: #fff;
+            border: 2px solid #ff4444;
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <img src="money-bag-2.svg" alt="Blocked" />
+    <h1>THIS TAB or WINDOW IS BLOCKED</h1>
+    <p>Wallet is restricted to The Wallet Tab,</p>
+    <p>and one other tab for dApps (DeFi) interaction.</p>
+    <p>Please close this tab either using the browser "X"</p>
+    <p>or by clicking the "Ok" button below.</p>
+
+    <button id="okButton">Ok</button>
+
+    <script src="blocked.js"></script>
+</body>
+</html>
+

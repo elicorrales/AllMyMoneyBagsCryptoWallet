@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--SimpleWebPageCryptoWallet-intro.html-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>SimpleWebpageCryptoWallet</title>
+  <link rel="stylesheet" href="css/wallet.css" />
+  <link rel="stylesheet" href="css/wallet-modals.css" />
+  <link rel="stylesheet" href="css/wallet-back-arrow.css" />
+  <link rel="stylesheet" href="css/asset-prov.css" />
+  <link rel="stylesheet" href="css/asset-prov-row.css" />
+  <!--<link rel="stylesheet" href="css/wallet-static-main-title.css" />-->
+  <link rel="stylesheet" href="css/wallet-animated-main-title.css" />
+  <link rel="stylesheet" href="css/wallet-disclaimer-panel.css" />
+  <link rel="stylesheet" href="css/wallet-help-icon.css" />
+  <link rel="stylesheet" href="css/wallet-new-password-panel.css" />
+  <link rel="stylesheet" href="css/wallet-choice-panel.css" />
+  <link rel="stylesheet" href="css/wallet-post-backup-panel.css" />
+  <link rel="stylesheet" href="css/wallet-reset-button.css" />
+  <link rel="stylesheet" href="css/wallet-yes-or-no-action.css" />
+  <link rel="stylesheet" href="css/wallet-dashboard.css" />
+  <script src="wallet-ui-common-js/wallet-ui-tab-or-page-lock.js" defer></script>
+  <script defer>
+    window.addEventListener('DOMContentLoaded', () => {
+      enforceMutualExclusion('wallet_mutual_exclude_group_logged_off_intro_dashboard');
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="backArrow">&#8592;</div>
+
+
+
+
+
+
+  <!-- Hamburger Menu (moved near the ✕ button) - page-level, conditioned on logged in-->
+  <div id="hamburgerMenuWrapper" style="display:none;">
+    <button id="hamburgerMenuBtn" aria-label="Menu">
+      ☰
+    </button>
+    <ul id="networkMenu">
+      <li id="settingsMenuItem">Settings</li>
+      <li id="resetAllMenuItem">Reset All...</li>
+      <li id="testAllAssetProvidersMenuItem">Test Providers...</li>
+      <li id="allAssetProvidersStatsMenuItem">Providers Stats...</li>
+      <li id="resetAllAssetProvidersMenuItem">Del Providers...</li>
+      <li id="resetAllDerivedAddressesMenuItem">Del Addresses...</li>
+      <li id="resetAllDerivedTokensMenuItem">Del Tokens...</li>
+      <li id="updateAllProvAssetsTokensStableMenuItem">Update All...</li>
+    </ul>
+  </div>
+
+  <!--Tied to BIG "X" upper-right of page -->
+  <div id="closeAppButton" title="Close App">✕</div>
+
+
+  <div id="resetOverlayModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Reset Wallet?</h3>
+      <p>This will erase all data stored in your browser. Are you sure?</p>
+
+      <div id="resetItemsList" class="modal-items">
+        <!-- JS will populate this -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="resetCancelBtn">Cancel</button>
+        <button id="resetConfirmBtn">I Understand, Erase</button>
+      </div>
+    </div>
+  </div>
+
+  <h1 id="mainTitle" style="text-align:center;">All My Money Bags</h1>
+
+  <!-- Disclaimer / Intro Panel -->
+  <section id="disclaimerPanel" class="panel">
+    <div id="disclaimer-warning-box">
+      Important: Just like you should never write down your login password, you must never write down this extended
+      password either. This password is what generates your seed words and encrypts your wallet backup — keeping it
+      secret is critical.
+    </div>
+
+    <div id="disclaimerPasswordIntro">
+      <div id="disclaimerPasswordIntroOverlay">
+        <p>This wallet is designed for use on your computer only, so we assume you’ve already memorized your login
+          password.
+        </p>
+        <p>We hope that password is strong enough — we’ll check when you create and confirm your wallet password.</p>
+        <p>The idea is to use your login password as a base, then add a short, unique wallet word you can easily
+          remember.
+        </p>
+      </div>
+    </div>
+    <p style="color:white;"><strong>Example:</strong></p>
+    <pre style="background:#eee;padding:10px;border-radius:6px;">computer-password
+           |
+           v
+computer-password.&lt;wallet-word&gt;</pre>
+
+  <div id="disclaimerAgree">
+    <label>
+      <div id="disclaimerAgreeOverlay">
+        <input type="checkbox" id="disclaimerAgreeCheckbox" />
+        I have read and understood the above warnings.
+      </div>
+    </label>
+  </div>
+
+    <button id="disclaimerContinueBtn" disabled>Continue</button>
+  </section>
+
+  <!-- Password Setup Panel -->
+  <section id="passwordSetupPanel" class="panel">
+    <div class="warning-box">
+      <strong>⚠️ Do NOT forget this password! If you are Creating a Wallet, and lose it, you cannot recover your Wallet.</strong>
+    </div>
+
+    <label class="enterNewPassword" for="password">Enter New Master Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="At least 22 characters" autocomplete="new-password" />
+    </div>
+
+    <label class="enterNewPassword" for="confirmPassword">Confirm Master Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="confirmPassword" placeholder="Re-enter password" autocomplete="new-password" />
+    </div>
+
+    <div id="toggleNewPasswordVisibility">Show passwords</div>
+
+    <div class="strength-wrapper">
+      <div id="strengthMeter">
+        <div id="strengthBar"></div>
+      </div>
+      <div id="strengthLabel"></div>
+    </div>
+
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="skipLengthCheckCheckbox" />
+        <span class="slider"></span>
+      </label>
+      <label for="skipLengthCheck" class="toggle-label">Allow password less than 22 characters</label>
+    </div>
+
+    <div id="message"></div>
+
+    <button id="passwordContinueBtn" disabled>Continue</button>
+
+    <div style="margin-top:1em;">
+      <a href="#" id="passwordHelpLink">Help Me With My Password</a>
+    </div>
+
+    <!-- Password Help Sub-panel (Initially Hidden) -->
+    <div id="passwordHelpPanel"
+      style="display:none; margin-top:1em; border:1px solid #ccc; padding:1em; border-radius:8px; background:#f9f9f9;">
+      <p><strong>Your password must be at least <span style="color:orange;">Good</span> strength to continue.</strong>
+      </p>
+      <p>Try using a short phrase made of a few common words. Example:</p>
+      <pre
+        style="background:#eee;padding:10px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+        <span>I love my pet</span>
+        <a href="#" id="tryThisPhrase1">Try this?</a>
+      </pre>
+      <p>Or use a mix of characters and symbols. For example:</p>
+      <pre
+        style="background:#eee;padding:10px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+        <span>MySecure!Pass#482</span>
+        <a href="#" id="tryThisPhrase2">Try this?</a>
+      </pre>
+      <p>Keep it memorable, but hard to guess. The strength meter above will guide you.</p>
+
+      <p>Or extend your existing login password with a wallet word:</p>
+      <pre style="background:#eee;padding:10px;border-radius:6px;">my.login.password.&lt;walletword&gt;</pre>
+
+      <p>Here are some helpful links on password strengths and why this is important:</p>
+      <p>Generate strong, easy-to-remember passphrases using simple word lists:</p>
+      <a href="https://diceware.rempe.us/#eff" target="_blank" rel="noopener noreferrer">Diceware Wordlist by EFF</a>
+
+      <p>Another option for creating memorable passphrases using dice rolls:</p>
+      <a href="https://diceware.dmuth.org/" target="_blank" rel="noopener noreferrer">Diceware Generator by Dmuth</a>
+    </div>
+  </section>
+
+  <!-- Wallet Choice Panel -->
+  <section id="walletChoicePanel" class="panel">
+    <h2 id="walletAction">Choose Wallet Action</h2>
+
+    <div  id="checkboxContainer" class="warning-box" style="margin-bottom:1em;">
+      <p><strong>Before you continue, please understand:</strong></p>
+      <label><input type="checkbox" id="willSavePasswordCheckbox" /> I will save my password somewhere
+        safe.</label><br />
+      <label><input type="checkbox" id="willMakeCopiesCheckbox" /> I will make multiple USB and paper copies of the
+        backup.</label><br />
+      <label><input type="checkbox" id="willUnderstandLossCheckbox" /> I understand that losing the password means
+        losing
+        access.</label>
+    </div>
+
+    <input
+      type="text"
+      id="walletNameInput"
+      placeholder="Enter wallet name (letters, numbers, spaces, dashes)"
+      autocomplete="off"
+    />
+    <div
+      id="walletNameMessage"
+    ></div>
+    <!-- Password/Encrypted Mnemonic Hardening Slider -->
+    <div class="slider-container">
+      <label for="iterationSlider">Seed-Phrase Hardening Level: <span id="iterationLabel">0</span>
+      <span id="hardenHelpIcon" class="help-icon" title="Protection Help">❓</span>
+      <span id="resetHelpIcon" class="help-icon" title="Reset Help">❓</span>
+      </label>
+      <input type="range" id="iterationSlider" min="0" max="19" step="1" value="0">
+    </div>
+    <button id="createWalletBtn" disabled>Create New Wallet</button>
+    <button id="goToImportWalletBtn" disabled>Import Existing Wallet</button>
+  </section>
+
+  <!-- Verify Seed Panel -->
+  <section id="verifySeedPanel" class="panel">
+    <h2 id="verifySeed">Verify Your Seed Phrase</h2>
+    <p id="downloadInstruct">Open your downloaded .zip backup using your password, copy the full 24-word phrase from inside, and paste it here
+      to verify.</p>
+    <textarea id="verifyMnemonicInput" rows="5" placeholder="Paste your 24 words here..."
+      style="width:100%; font-family:monospace;"></textarea>
+    <div id="verifySeedError" style="color:red; margin-top:0.5em;"></div>
+    <button id="verifySeedBtn">Verify Seed</button>
+    <div id="verifyProgress" class="progress-list" style="margin-top:1em;"></div>
+  </section>
+
+  <!-- Import Wallet Panel -->
+  <section id="importWalletPanel" class="panel">
+    <h2>Import Wallet</h2>
+    <p>Paste your 24-word seed phrase below to import your wallet.</p>
+    <textarea id="importMnemonicInput" rows="5" placeholder="Paste your 24 words here..."
+      style="width:100%; font-family:monospace;"></textarea>
+    <button id="doImportWalletBtn" disabled>Import Wallet</button>
+    <div id="importProgress" class="progress-list" style="margin-top:1em;"></div>
+  </section>
+
+  <!-- Post Backup Confirmation Panel -->
+  <section id="postBackupPanel" class="panel">
+    <h2>Backup Saved</h2>
+    <div id="postBackupCheckBoxes">
+      <label><input type="checkbox" id="chkSavePasswordCheckbox" /> I have saved my password somewhere safe.</label>
+      <label><input type="checkbox" id="chkMakeCopiesCheckbox" /> I have made multiple USB and paper copies of the
+        backup.</label>
+      <label><input type="checkbox" id="chkUnderstandLossCheckbox" /> I understand that losing the password means losing
+        access.</label>
+    </div>
+    <!-- Add this div for showing the verification progress -->
+    <div id="postBackupVerifyProgress" class="progress-list" style="margin-top:1em; font-family: monospace;"></div>
+
+    <!-- Removed “Print Seed Phrase” button entirely -->
+    <button id="doneBtn" disabled>Continue to Wallet</button>
+  </section>
+
+<!-- Asset Provider Stats Panel -->
+<section id="assetProviderStatsPanel" class="panel" style="display:none">
+  <h2>Asset Provider Statistics</h2>
+
+  <!-- Filter checkboxes -->
+  <div class="asset-prov-filters">
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvAllCheckbox" checked>
+      <span>All</span>
+    </label>
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvErrorsCheckbox">
+      <span>Errors</span>
+    </label>
+    <label class="asset-prov-checkbox">
+      <input type="checkbox" id="assetProvUnusedCheckbox">
+      <span>Unused</span>
+    </label>
+    <!-- search box -->
+    <input type="text" id="assetProvSearchBox" placeholder="Search..." style="margin-left:auto; padding:0.3em 0.5em;">
+  </div>
+
+  <!-- Scrollable container for provider rows -->
+  <div id="assetProvListContainer" class="asset-prov-list">
+    <!-- JS will populate provider rows here -->
+  </div>
+</section>
+
+
+
+  <!-- Wallet Status Message - this is page-level, conditioned on logged in -->
+  <!-- we need a 'Status Messages:' heading here -->
+  <div id="walletStatusContainer" class="box">
+
+    <div style="font-weight:bold; margin-bottom:0.3em;">Status:</div>
+    <div id="walletStatus"></div>
+  </div>
+
+  <!-- Generic Informative "OK" modal -->
+  <div id="infoOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="infoModalTitle" aria-describedby="infoModalDesc">
+    <div class="modal-box">
+      <h3 id="infoModalTitle">Notice:</h3>
+      <p id="infoModalMessage" style="margin-bottom: 8px;"></p>
+      <p id="infoModalDetails" style="color: #666;"></p>
+      <div class="modal-actions">
+        <button id="infoOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Busy/Please Wait Modal (no buttons) -->
+  <div id="busyOverlayModal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="busyModalTitle" aria-describedby="busyModalMessage">
+    <div class="modal-box">
+      <!-- Flex row: spinner + heading -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="spinner" id="busySpinner"></div>
+        <h3 id="busyModalTitle" style="margin: 0;">Please Wait</h3>
+      </div>
+
+      <!-- Dynamic message (below) -->
+      <div id="busyMessageContainer" style="margin-top: 12px;">
+        <p id="busyModalMessage" style="font-size: 16px; margin: 0;"></p>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div id="yesOrNoActionButton" title="Some Title">✕</div>
+  -->
+  <div id="yesOrNoOverlayModal" class="yesorno-modal-overlay hidden">
+    <div class="yesorno-modal-box">
+      <h3>Some Message</h3>
+      <p>The details the details the details</p>
+
+      <div id="yesOrNoDetails" class="yesorno-modal-items">
+      </div>
+
+      <div class="yesorno-modal-actions">
+        <button id="yesOrNoNegativeBtn">Replaced By Param</button>
+        <button id="yesOrNoPositiveBtn">Replaced By Param</button>
+      </div>
+    </div>
+  </div>
+
+  <!----------------------------------------------------------------->
+  <!-- load all the rest of the scripts-->
+  <!----------------------------------------------------------------->
+  <script src="wallet-intro-ui-js/wallet-intro-ui-page-included-scripts.js"></script>
+</body>
+
+</html>
+<!--SimpleWebPageCryptoWallet-intro.html-->
+<!--END OF FILE -->

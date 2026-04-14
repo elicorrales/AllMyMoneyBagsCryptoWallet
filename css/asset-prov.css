@@ -1,0 +1,47 @@
+/* css/asset-prov.css */
+
+section#assetProviderStatsPanel {
+  height: 500px; 
+  display: flex;          
+  flex-direction: column; 
+  overflow: hidden;       
+  background-color: #fff;
+  padding: 1em;
+  box-sizing: border-box;
+  min-height: 300px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  gap: 0.5em;
+  font-family: sans-serif;
+}
+
+
+#assetProvListContainer { 
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0; 
+  padding-right: 8px; 
+  border-top: 1px solid #eee;
+}
+
+/* Panel heading */
+#assetProviderStatsPanel h2 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Filter checkboxes container */
+.asset-prov-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0.5em;
+}
+
+
+/* Ensure rendered HTML doesn't break the row width */
+.asset-prov-error-content * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
